@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SnakeGame
 {
@@ -6,11 +7,9 @@ namespace SnakeGame
     {
         static void Main(string[] args)
         {
-            Point p1 = new Point(1, 3, '*', ConsoleColor.Red);
-            p1.Draw();
+            var map = new Map(20, 40);
 
-            Point p2 = new Point(4, 5, '#', ConsoleColor.Green);
-            p2.Draw();
+            map.Show();
 
             Console.ReadLine();
             Console.ResetColor();
