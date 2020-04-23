@@ -18,9 +18,10 @@ namespace SnakeGame
             
             map.Show();
             snake.Show();
-            
+
             while (snake.IsAlive)
             {
+                snake.Controll();
                 snake.Move();
                 Thread.Sleep(100);
             }
