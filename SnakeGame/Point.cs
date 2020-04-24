@@ -6,10 +6,10 @@ namespace SnakeGame
 {
     class Point
     {
-        private int _x;
-        private int _y;
-        private char _sym;
-        private ConsoleColor _color;
+       protected int _x;
+       protected int _y;
+       protected char _sym;
+       protected ConsoleColor _color;
         private Dictionary<Direction, Func<int, int>> _operation;
 
         public Point()
@@ -59,6 +59,11 @@ namespace SnakeGame
             _operation[direction](offset);
         }
 
+        public bool CheckCollision(Point otherPoint)
+        {
+            return _x == otherPoint._x && _y == otherPoint._y;
+        }
+
         public void Draw()
         {
             if (_sym == '\0')
@@ -71,6 +76,8 @@ namespace SnakeGame
 
         public void Clear()
         {
+            _sym = '\0';
+
             Console.SetCursorPosition(_x, _y);
             Console.WriteLine('\0');
         }

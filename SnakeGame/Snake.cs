@@ -11,7 +11,7 @@ namespace SnakeGame
         private List<Point> _snake;
         private Direction _direction;
         private Map _map;
-        
+
         public Snake(Point tail, int length, Direction direction, Map map)
         {
             _snake = new List<Point>(length);
@@ -33,14 +33,33 @@ namespace SnakeGame
             Point tail = _snake.First();
             _snake.Remove(tail);
 
-            if (_map.CheckCollisions(_snake))
-                IsAlive = false;
-
             Point head = GetNextPoint();
             _snake.Add(head);
 
+            if (_map.CheckCollisions(head))
+                IsAlive = false;
+
+            _map.Remove(tail);
             tail.Clear();
+
+            _map.Place(head);
             head.Draw();
+        }
+
+        public bool Eat(Point food)
+        {
+            Point head = GetNextPoint();
+
+            if (head.CheckCollision(food))
+            {
+                _snake.Add(head);
+                _map.Place(head);
+
+                head.Draw();
+                return true;
+            }
+
+            return false;
         }
 
         private Point GetNextPoint()
@@ -48,6 +67,7 @@ namespace SnakeGame
             Point lastHead = _snake.Last();
             Point newHead = new Point(lastHead);
             newHead.Move(1, _direction);
+
             return newHead;
         }
 
@@ -56,7 +76,7 @@ namespace SnakeGame
             if (Console.KeyAvailable)
             {
                 ConsoleKeyInfo key = Console.ReadKey();
-                
+
                 switch (key.Key)
                 {
                     case ConsoleKey.UpArrow:
